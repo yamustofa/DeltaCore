@@ -202,6 +202,25 @@ public extension ExternalGameControllerManager
     }
 }
 
+//MARK: - Connecting Other Controllers -
+public extension ExternalGameControllerManager
+{
+    /// Adds a controller that DeltaCore does not discover by itself, such as a
+    /// PhoneGameController. It gets a player index like any other controller,
+    /// and observers receive `.externalGameControllerDidConnect`.
+    func connect(_ controller: GameController)
+    {
+        guard !self.connectedControllers.contains(where: { $0.isEqual(controller) }) else { return }
+        self.add(controller)
+    }
+    
+    /// Removes a controller added with `connect(_:)`.
+    func disconnect(_ controller: GameController)
+    {
+        self.remove(controller)
+    }
+}
+
 //MARK: - Managing Controllers -
 private extension ExternalGameControllerManager
 {
